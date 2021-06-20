@@ -6,7 +6,6 @@ const classSchema = new Schema(
       type: String,
       required: true,
     },
-    watched: Boolean,
   },
   { collection: 'classes', strict: false }
 );
@@ -15,6 +14,16 @@ const Class = model('Class', classSchema);
 
 module.exports = {
   find: (criteria) => {
-    return Class.find(criteria);
+    const { q, limit, fields } = criteria;
+    const query = Class.find();
+    if (q) {
+      const regex = new RegExp(`.*${q}.*`, 'i');
+      const searchQuery = { title: regex };
+      query.find(searchQuery);
+    }
+    if (limit) query.limit(limit);
+    if (fields) query.select(fields.split(','));
+
+    return query.exec();
   },
 };
