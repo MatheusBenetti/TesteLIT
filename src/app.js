@@ -11,6 +11,13 @@ connect();
 
 app.use(express.json());
 
+//Não sei se é bem isso.
+const frontPage = [
+  { title: 'React: Function Components, uma abordagem moderna' },
+  { title: 'Buscar neste curso' },
+  { title: 'Aula atual', name: '01. Iniciando com Functions Components' },
+];
+
 const aula1 = [
   { id: 1, aula: '01 - Introdução' },
   { id: 2, aula: '02 - Primeiro Function Components' },
@@ -21,9 +28,7 @@ const aula1 = [
 ];
 
 app.get('/', (req, res) => {
-  return res.json({
-    message: 'API ok',
-  });
+  return res.json(frontPage);
 });
 
 app.get('/aula1', (req, res) => {
